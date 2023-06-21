@@ -43,4 +43,4 @@ jobs:
         draft: true
         automatic_release_tag: latest
         files: |
-          MirrorPatch.dll
+          ${{ github.workspace }}\MirrorPatch\bin\Release\MirrorPatch.dll

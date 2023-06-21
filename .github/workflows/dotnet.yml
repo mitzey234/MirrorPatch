@@ -27,7 +27,7 @@ jobs:
       run: ls
 
     - name: Test
-      run: ls PluginRefs
+      run: ls PluginRefs\References
 
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1
@@ -44,4 +44,4 @@ jobs:
     - name: Build solution
       run: msbuild MirrorPatch.sln -t:rebuild -property:Configuration=Release
       env:
-        BRIGHTS_REFERENCES: ${{ github.workspace }}\PluginRefs\PluginReferences\References\
+        BRIGHTS_REFERENCES: ${{ github.workspace }}\PluginRefs\References\

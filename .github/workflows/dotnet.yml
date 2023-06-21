@@ -20,7 +20,11 @@ jobs:
     - uses: actions/checkout@master
       with:
         repository: mitzey234/PluginReferences
+        path: ./PluginRefs
         token: ${{ secrets.my_pat }}
+        
+    - name: Test
+      run: ls
 
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1

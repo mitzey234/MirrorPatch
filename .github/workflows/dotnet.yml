@@ -25,6 +25,11 @@ jobs:
         
     - name: Test
       run: ls
+      
+    - name: paths
+      run: echo %BRIGHTS_REFERENCES%
+      env:
+        BRIGHTS_REFERENCES: ${{ github.workspace }}
 
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1

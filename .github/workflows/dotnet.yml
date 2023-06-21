@@ -19,7 +19,7 @@ jobs:
     
     - uses: actions/checkout@master
       with:
-        repository: Dr-Brights-Facility/PluginReferences
+        repository: mitzey234/PluginReferences
         token: ${{ secrets.my_pat }}
 
     - name: Setup MSBuild

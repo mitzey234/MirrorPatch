@@ -29,7 +29,7 @@ jobs:
     - name: paths
       run: echo $BRIGHTS_REFERENCES
       env:
-        BRIGHTS_REFERENCES: ${{ github.workspace }}/PluginRefs/References/
+        BRIGHTS_REFERENCES: ${{ github.workspace }}\PluginRefs\References\
 
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1

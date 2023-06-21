@@ -43,8 +43,8 @@ jobs:
         BRIGHTS_REFERENCES: ${{ github.workspace }}\PluginRefs\References\
 
     - name: Upload Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: assembly
-          path: ${{ github.workspace }}\MirrorPatch\bin\Release\MirrorPatch.dll
-          retention-days: 5
+      uses: actions/upload-artifact@v3
+      with:
+        name: assembly
+        path: ${{ github.workspace }}\MirrorPatch\bin\Release\MirrorPatch.dll
+        retention-days: 5

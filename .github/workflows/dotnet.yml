@@ -16,6 +16,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    
+    - uses: actions/checkout@master
+      with:
+        name: Dr-Brights-Facility/PluginReferences
+        ref: refs/heads/release
 
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1

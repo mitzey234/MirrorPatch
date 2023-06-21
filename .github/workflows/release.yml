@@ -39,9 +39,9 @@ jobs:
         BRIGHTS_REFERENCES: ${{ github.workspace }}\PluginRefs\References\
 
     - uses: "marvinpinto/action-automatic-releases@latest"
-    with:
-      repo_token: "${{ secrets.my_pat }}"
-      prerelease: false
-      draft: true
-      files: |
-        MirrorPatch\bin\Release\MirrorPatch.dll
+      with:
+        repo_token: "${{ secrets.my_pat }}"
+        prerelease: false
+        draft: true
+        files: |
+          MirrorPatch\bin\Release\MirrorPatch.dll

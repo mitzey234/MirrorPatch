@@ -1,13 +1,9 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: .NET Build
+name: .NET Release
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main", "dev" ]
   workflow_dispatch:
     branches: [ "main", "v13"]
 
@@ -41,3 +37,11 @@ jobs:
       run: msbuild MirrorPatch.sln -t:rebuild -property:Configuration=Release
       env:
         BRIGHTS_REFERENCES: ${{ github.workspace }}\PluginRefs\References\
+
+    - uses: "marvinpinto/action-automatic-releases@latest"
+    with:
+      repo_token: "${{ secrets.my_pat }}"
+      prerelease: false
+      draft: true
+      files: |
+        MirrorPatch\bin\Release\MirrorPatch.dll

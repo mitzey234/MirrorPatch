@@ -9,7 +9,7 @@ on:
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
-    branches: [ "main", "v13"]
+    branches: [ "main", "v13" ]
 
 jobs:
   build:

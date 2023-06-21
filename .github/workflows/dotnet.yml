@@ -22,14 +22,6 @@ jobs:
         repository: mitzey234/PluginReferences
         path: ./PluginRefs
         token: ${{ secrets.my_pat }}
-        
-    - name: Test
-      run: ls
-      
-    - name: paths
-      run: echo $BRIGHTS_REFERENCES
-      env:
-        BRIGHTS_REFERENCES: ${{ github.workspace }}\PluginRefs\References\
 
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1
@@ -45,3 +37,5 @@ jobs:
 
     - name: Build solution
       run: msbuild MirrorPatch.sln -t:rebuild -property:Configuration=Release
+      env:
+        BRIGHTS_REFERENCES: ${{ github.workspace }}\PluginRefs\References\

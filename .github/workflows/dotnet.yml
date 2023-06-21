@@ -23,12 +23,6 @@ jobs:
         path: ./PluginRefs
         token: ${{ secrets.my_pat }}
 
-    - name: Test
-      run: ls
-
-    - name: Test
-      run: ls PluginRefs\References
-
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1
 

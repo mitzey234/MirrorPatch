@@ -43,5 +43,6 @@ jobs:
         repo_token: "${{ secrets.my_pat }}"
         prerelease: false
         draft: true
+        automatic_release_tag: latest
         files: |
           MirrorPatch\bin\Release\MirrorPatch.dll

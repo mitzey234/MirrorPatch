@@ -27,7 +27,7 @@ jobs:
       run: ls
       
     - name: paths
-      run: echo %BRIGHTS_REFERENCES%
+      run: echo $BRIGHTS_REFERENCES
       env:
         BRIGHTS_REFERENCES: ${{ github.workspace }}
 

@@ -7,9 +7,9 @@ on:
   push:
     branches: [ "main" ]
   pull_request:
-    branches: [ "main", "dev" ]
+    branches: [ "main" ]
   workflow_dispatch:
-    branches: [ "main", "v13"]
+    branches: *
 
 jobs:
   build:
@@ -41,3 +41,10 @@ jobs:
       run: msbuild MirrorPatch.sln -t:rebuild -property:Configuration=Release
       env:
         BRIGHTS_REFERENCES: ${{ github.workspace }}\PluginRefs\References\
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: assembly
+        path: ${{ github.workspace }}\MirrorPatch\bin\Release\MirrorPatch.dll
+        retention-days: 5

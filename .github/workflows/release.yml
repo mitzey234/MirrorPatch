@@ -1,0 +1,47 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET Release
+
+on:
+  workflow_dispatch:
+    branches: [ "main", "v13"]
+
+jobs:
+  build:
+
+    runs-on: windows-2019
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - uses: actions/checkout@master
+      with:
+        repository: mitzey234/PluginReferences
+        path: ./PluginRefs
+        token: ${{ secrets.my_pat }}
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.5
+  
+    - name: setup-msbuild
+      uses: microsoft/setup-msbuild@v1.1
+
+    - name: Restore Packages
+      run: nuget restore MirrorPatch.sln
+
+    - name: Build solution
+      run: msbuild MirrorPatch.sln -t:rebuild -property:Configuration=Release
+      env:
+        BRIGHTS_REFERENCES: ${{ github.workspace }}\PluginRefs\References\
+
+    - uses: "marvinpinto/action-automatic-releases@latest"
+    with:
+      repo_token: "${{ secrets.my_pat }}"
+      prerelease: false
+      draft: true
+      files: |
+        MirrorPatch\bin\Release\MirrorPatch.dll

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace BrightPlugin.Utils
+namespace MirrorPatch.Utils
 {
     //For some reason its possible to make the server disconnect itself with invalid data, this patch stops that from being a thing
     [HarmonyPatch(typeof(NetworkClient), nameof(NetworkClient.OnTransportData))]

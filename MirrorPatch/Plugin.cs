@@ -2,7 +2,7 @@
 using PluginAPI.Core.Attributes;
 using System;
 
-namespace BrightPlugin
+namespace MirrorPatch
 {
     public class Plugin
     {

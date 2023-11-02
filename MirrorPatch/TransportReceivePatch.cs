@@ -23,39 +23,44 @@ namespace MirrorPatch.Utils
                     Debug.LogWarning("NetworkClient: failed to add batch, disconnecting.");
                     if (__instance.identity != null && __instance.identity.isServer)
                     {
-                        Log.Debug("NetworkClient ERROR (unbatcher.AddBatch): " + __instance.address + " - " + (__instance.identity != null ? __instance.identity.name + " - " + __instance.identity.isServer : "(null)") + __instance.connectionId + " - " + __instance.isAuthenticated);
+                        Log.Debug("Server attempted to disconnect dedicated host instance, blocking...");
                         return false;
                     }
                     NetworkClient.connection.Disconnect();
                     return false;
                 }
-                NetworkReader networkReader;
+                ArraySegment<byte> arraySegment;
                 double num;
-                while (!NetworkClient.isLoadingScene && NetworkClient.unbatcher.GetNextMessage(out networkReader, out num))
+                while (!NetworkClient.isLoadingScene && NetworkClient.unbatcher.GetNextMessage(out arraySegment, out num))
                 {
-                    if (networkReader.Remaining < 2)
+                    using (NetworkReaderPooled networkReaderPooled = NetworkReaderPool.Get(arraySegment))
                     {
-                        Debug.LogWarning("NetworkClient: received Message was too short (messages should start with message id)");
-                        if (__instance.identity != null && __instance.identity.isServer)
+                        if (networkReaderPooled.Remaining < 2)
                         {
-                            Log.Debug("NetworkClient ERROR (unbatcher.GetNextMessage): " + __instance.address + " - " + (__instance.identity != null ? __instance.identity.name + " - " + __instance.identity.isServer : "(null)") + __instance.connectionId + " - " + __instance.isAuthenticated);
+                            Debug.LogWarning("NetworkClient: received Message was too short (messages should start with message id)");
+                            if (__instance.identity != null && __instance.identity.isServer)
+                            {
+                                Log.Debug("Server attempted to disconnect dedicated host instance, blocking...");
+                                return false;
+                            }
+                            NetworkClient.connection.Disconnect();
                             return false;
                         }
-                        NetworkClient.connection.Disconnect();
-                        return false;
-                    }
-                    NetworkClient.connection.remoteTimeStamp = num;
-                    if (!NetworkClient.UnpackAndInvoke(networkReader, channelId))
-                    {
-                        Debug.LogWarning("NetworkClient: failed to unpack and invoke message. Disconnecting.");
-                        if (__instance.identity != null && __instance.identity.isServer)
+                        NetworkClient.connection.remoteTimeStamp = num;
+                        if (!NetworkClient.UnpackAndInvoke(networkReaderPooled, channelId))
                         {
-                            Log.Debug("NetworkClient ERROR (unbatcher.UnpackAndInvoke): " + __instance.address + " - " + (__instance.identity != null ? __instance.identity.name + " - " + __instance.identity.isServer : "(null)") + __instance.connectionId + " - " + __instance.isAuthenticated);
+                            Debug.LogWarning("NetworkClient: failed to unpack and invoke message. Disconnecting.");
+                            if (__instance.identity != null && __instance.identity.isServer)
+                            {
+                                Log.Debug("Server attempted to disconnect dedicated host instance, blocking...");
+                                return false;
+                            }
+                            NetworkClient.connection.Disconnect();
                             return false;
                         }
-                        NetworkClient.connection.Disconnect();
-                        return false;
+                        continue;
                     }
+                    break;
                 }
                 if (!NetworkClient.isLoadingScene && NetworkClient.unbatcher.BatchesCount > 0)
                 {

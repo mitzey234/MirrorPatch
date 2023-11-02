@@ -3,9 +3,15 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <ItemGroup>
     <Reference Include="0Harmony" HintPath="$(BRIGHTS_REFERENCES)\0Harmony.dll" Private="false" />
-    <Reference Include="Assembly-CSharp-Publicized" HintPath="$(BRIGHTS_REFERENCES)\Assembly-CSharp-Publicized.dll" Private="false" />
-    <Reference Include="Mirror" HintPath="$(BRIGHTS_REFERENCES)\Mirror-Publicized.dll" Private="false" />
-    <Reference Include="PluginAPI-Publicized" HintPath="$(BRIGHTS_REFERENCES)\PluginAPI-Publicized.dll" Private="false" />
+    <Reference Include="Assembly-CSharp-Publicized">
+      <HintPath>..\..\PluginReferences\References\Assembly-CSharp-Publicized.dll</HintPath>
+    </Reference>
+    <Reference Include="Mirror-Publicized">
+      <HintPath>..\..\PluginReferences\References\Mirror-Publicized.dll</HintPath>
+    </Reference>
+    <Reference Include="PluginAPI-Publicized">
+      <HintPath>..\..\PluginReferences\References\PluginAPI-Publicized.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.CoreModule" HintPath="$(BRIGHTS_REFERENCES)\UnityEngine.CoreModule.dll" Private="false" />
   </ItemGroup>
   <PropertyGroup>
